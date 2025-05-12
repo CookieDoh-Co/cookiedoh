@@ -1,0 +1,23 @@
+{
+  "name": "cookiedoh",
+  "version": "1.0.0",
+  "description": "Displays cookie data",
+  "homepage": "https://github.com/TheJoshBishop/cookiedoh#readme",
+  "bugs": {
+    "url": "https://github.com/TheJoshBishop/cookiedoh/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheJoshBishop/cookiedoh.git"
+  },
+  "license": "ISC",
+  "author": "Thomas, Richmond, Bishop",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "puppeteer": "^24.8.2"
+  }
+}
