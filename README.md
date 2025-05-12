@@ -4,3 +4,6 @@ Devs:
 - Truman Thomas
 - Bryce Richmond
 - Josh Bishop
+
+### Setup
+- Run ```npm install``` to install dependencies

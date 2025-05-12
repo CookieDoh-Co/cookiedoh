@@ -4,12 +4,12 @@
     "version": "1.0",
     "description": "An extension to expose info on site cookies",
     "action": {
-        "default_popup": "window.html"
+        "default_popup": "index.html"
     },
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["content.js"]
+            "js": ["index.js"]
         }
     ]
 }
