@@ -19,7 +19,14 @@
     <div id="cookieCounters">
         <p>First-Party Cookies: <span id="firstPartyCookieCount">0</span></p>
         <p>Third-Party Cookies: <span id="thirdPartyCookieCount">0</span></p>
+        <p>Location Tracking Cookies: <span id="locationTrackingCookieCount">0</span></p>
+        <p>Secure Cookies: <span id="secureCookieCount">0</span></p>
+        <p>HttpOnly Cookies: <span id="httpOnlyCookieCount">0</span></p>
+        <p>SameSite Cookies: <span id="sameSiteCookieCount">0</span></p>
+        <p>Session Cookies: <span id="sessionCookieCount">0</span></p>
+        <p>Persistent Cookies: <span id="persistentCookieCount">0</span></p>
     </div>
+    <svg id="bubbleMap" width="400" height="140" style="display:block;margin:auto;"></svg>
     <input type="text" id="search" placeholder="Search cookie names...">
     <pre id="cookieList">Loading...</pre>
     <script src="popup.js"></script>
