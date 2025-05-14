@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "My Chrome Extension",
+    "name": "Cookie Data Observation Handler (DOH)",
     "version": "1.0",
     "description": "An extension to expose info on site cookies",
     "permissions": ["cookies", "tabs", "activeTab", "storage"],
