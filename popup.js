@@ -27,6 +27,7 @@ function countFirstAndThirdPartyCookies(cookies, currentUrl) {
   document.getElementById('thirdPartyCookieCount').textContent = thirdPartyCookies;
 }
 
+
 function renderCookies(cookies) {
   const grouped = groupCookiesByDomain(cookies);
 
@@ -40,7 +41,7 @@ function renderCookies(cookies) {
 
 async function loadCookies() {
   const [currentTab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  allCookies = await chrome.cookies.getAll({ url: currentTab.url });
+  allCookies = await chrome.cookies.getAll({});
   renderCookies(allCookies);
   countFirstAndThirdPartyCookies(allCookies, currentTab.url);
 }
