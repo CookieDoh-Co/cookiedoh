@@ -9,6 +9,24 @@ function groupCookiesByDomain(cookies) {
   return grouped;
 }
 
+function countFirstAndThirdPartyCookies(cookies, currentUrl) {
+  const currentDomain = new URL(currentUrl).hostname;
+  let firstPartyCookies = 0;
+  let thirdPartyCookies = 0;
+
+  for (const cookie of cookies) {
+    const cookieDomain = cookie.domain.replace(/^\./,'');
+    if (currentDomain.includes(cookieDomain)) {
+      firstPartyCookies++;
+    } else {
+      thirdPartyCookies++;
+    }
+  }
+
+  document.getElementById('firstPartyCookieCount').textContent = firstPartyCookies;
+  document.getElementById('thirdPartyCookieCount').textContent = thirdPartyCookies;
+}
+
 function renderCookies(cookies) {
   const grouped = groupCookiesByDomain(cookies);
 
@@ -21,8 +39,10 @@ function renderCookies(cookies) {
 }
 
 async function loadCookies() {
-  allCookies = await chrome.cookies.getAll({});
+  const [currentTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  allCookies = await chrome.cookies.getAll({ url: currentTab.url });
   renderCookies(allCookies);
+  countFirstAndThirdPartyCookies(allCookies, currentTab.url);
 }
 
 document.getElementById('search').addEventListener('input', (e) => {
