@@ -206,4 +206,6 @@ document.querySelectorAll('#cookieFilters input[type=checkbox]').forEach(cb => {
   cb.addEventListener('change', updateDisplay);
 });
 
+
+
 loadCookies();
