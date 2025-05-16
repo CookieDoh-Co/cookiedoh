@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cookie Descriptions - Cookiedoh</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      width: 600px;
+      height: 800px;
+      overflow: hidden;
+    }
+    
+    .nav-tabs {
+      display: flex;
+      background-color: #333;
+      overflow: hidden;
+    }
+    
+    .nav-tab {
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 16px;
+      flex: 1;
+      transition: background-color 0.3s;
+    }
+    
+    .nav-tab:hover {
+      background-color: #555;
+    }
+    
+    .nav-tab.active {
+      background-color: #4CAF50;
+      font-weight: bold;
+    }
+    
+    .container {
+      display: flex;
+      height: calc(100vh - 48px);
+    }
+    
+    .tabs {
+      width: 200px;
+      background-color: #fff;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      overflow-y: auto;
+      height: 100%;
+    }
+    
+    .tab {
+      padding: 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      transition: background-color 0.2s;
+      font-size: 16px;
+    }
+    
+    .tab:hover {
+      background-color: #f0f0f0;
+    }
+    
+    .tab.active {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      height: 100%;
+    }
+    
+    .description {
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+    
+    .description.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    h1 {
+      color: #333;
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    h2 {
+      color: #444;
+    }
+    
+    p {
+      line-height: 1.6;
+      color: #555;
+      font-size: 16px;
+    }
+    
+    .example {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 5px;
+      border-left: 4px solid #4CAF50;
+      margin: 15px 0;
+      font-size: 16px;
+    }
+    
+    .back-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 8px 15px;
+      background-color: #f0f0f0;
+      color: #333;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    
+    .back-button:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .tag {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 10px;
+      margin-right: 4px;
+      color: white;
+    }
+    
+    .first-party { background-color: #4CAF50; }
+    .third-party { background-color: #F44336; }
+    .secure { background-color: #FF9800; }
+    .http-only { background-color: #9C27B0; }
+    .session { background-color: #607D8B; }
+    .persistent { background-color: #FFC107; }
+    .location { background-color: #2196F3; }
+    .same-site { background-color: #00BCD4; }
+  </style>
+</head>
+<body>
+  <div class="nav-tabs">
+    <a href="bubbles.html" class="nav-tab">Bubble Visualization</a>
+    <a href="descriptions.html" class="nav-tab active">Cookie Descriptions</a>
+  </div>
+  
+  <div class="container">
+    <div class="tabs" id="tabs">
+      <div class="tab" data-target="firstParty">First-Party Cookies</div>
+      <div class="tab" data-target="thirdParty">Third-Party Cookies</div>
+      <div class="tab" data-target="location">Location Tracking Cookies</div>
+      <div class="tab" data-target="secure">Secure Cookies</div>
+      <div class="tab" data-target="httpOnly">HttpOnly Cookies</div>
+      <div class="tab" data-target="sameSite">SameSite Cookies</div>
+      <div class="tab" data-target="session">Session Cookies</div>
+      <div class="tab" data-target="persistent">Persistent Cookies</div>
+    </div>
+    
+    <div class="content">
+      
+      <div id="firstParty" class="description">
+        <h1>First-Party Cookies <span class="tag first-party">1st Party</span></h1>
+        <p>First-party cookies are created and stored by the website you're directly visiting. These cookies are set by the domain in your browser's address bar.</p>
+        
+        <h2>What They Do</h2>
+        <p>First-party cookies help websites remember information about your visit, such as:</p>
+        <ul>
+          <li>Login credentials (keeping you signed in)</li>
+          <li>Language preferences</li>
+          <li>Items in your shopping cart</li>
+          <li>Personalization settings</li>
+        </ul>
+        
+        <h2>Privacy Implications</h2>
+        <p>First-party cookies are generally considered less invasive to privacy since they're limited to the specific website you're visiting. They're essential for most modern websites to function properly.</p>
+        
+        <div class="example">
+          <strong>Example:</strong> When you visit example.com and it sets a cookie, that's a first-party cookie. It can only be read by example.com.
+        </div>
+      </div>
+      
+      <div id="thirdParty" class="description">
+        <h1>Third-Party Cookies <span class="tag third-party">3rd Party</span></h1>
+        <p>Third-party cookies are created by domains other than the website you're directly visiting. They're typically set by third-party services embedded on websites, such as ads, social media buttons, or analytics tools.</p>
+        
+        <h2>What They Do</h2>
+        <p>Third-party cookies are commonly used for:</p>
+        <ul>
+          <li>Cross-site tracking of your browsing habits</li>
+          <li>Ad targeting and retargeting</li>
+          <li>Building user profiles across multiple websites</li>
+          <li>Analytics and measuring ad performance</li>
+        </ul>
+        
+        <h2>Privacy Implications</h2>
+        <p>Third-party cookies raise significant privacy concerns because they allow companies to track your activity across multiple websites. Many modern browsers are phasing out support for third-party cookies due to these privacy issues.</p>
+        
+        <div class="example">
+          <strong>Example:</strong> When you visit example.com but it has Facebook sharing buttons, Facebook may set a third-party cookie that can track your visits to other sites with Facebook elements.
+        </div>
+      </div>
+      
+      <div id="location" class="description">
+        <h1>Location Tracking Cookies <span class="tag location">Location</span></h1>
+        <p>Location tracking cookies store information about your geographic location or contain data that helps websites determine where you are physically located.</p>
+        
+        <h2>What They Do</h2>
+        <p>These cookies are used to:</p>
+        <ul>
+          <li>Provide location-based services (like local weather)</li>
+          <li>Customize content based on your location</li>
+          <li>Target location-specific advertising</li>
+          <li>Comply with regional regulations or restrictions</li>
+        </ul>
+        
+        <h2>Privacy Implications</h2>
+        <p>Location tracking raises privacy concerns as it reveals your physical whereabouts. While useful for many services, this data can be sensitive and potentially misused if it falls into the wrong hands.</p>
+        
+        <div class="example">
+          <strong>Example:</strong> A cookie containing GPS coordinates, city names, or postal codes that's used to show you local deals or customize a map view.
+        </div>
+      </div>
+      
+      <div id="secure" class="description">
+        <h1>Secure Cookies <span class="tag secure">Secure</span></h1>
+        <p>Secure cookies have the "Secure" attribute set, which means they can only be transmitted over encrypted HTTPS connections, not over unencrypted HTTP.</p>
+        
+        <h2>What They Do</h2>
+        <p>Secure cookies protect sensitive information by:</p>
+        <ul>
+          <li>Ensuring cookies are only sent over encrypted connections</li>
+          <li>Preventing cookies from being intercepted during transmission</li>
+          <li>Protecting authentication tokens and session IDs</li>
+        </ul>
+        
+        <h2>Security Benefits</h2>
+        <p>The Secure attribute helps protect against man-in-the-middle attacks and eavesdropping. It's particularly important for cookies containing sensitive data like authentication tokens or personal information.</p>
+        
+        <div class="example">
+          <strong>Example:</strong> A cookie containing your login session token that's marked as Secure will only be sent when you're on an HTTPS connection, preventing it from being stolen over insecure networks.
+        </div>
+      </div>
+      
+      <div id="httpOnly" class="description">
+        <h1>HttpOnly Cookies <span class="tag http-only">HttpOnly</span></h1>
+        <p>HttpOnly cookies have the "HttpOnly" attribute set, which prevents JavaScript from accessing the cookie. They can only be accessed by the server, not by client-side scripts.</p>
+        
+        <h2>What They Do</h2>
+        <p>HttpOnly cookies enhance security by:</p>
+        <ul>
+          <li>Preventing cross-site scripting (XSS) attacks from stealing cookies</li>
+          <li>Ensuring sensitive cookies can only be read by the server</li>
+          <li>Protecting authentication and session data</li>
+        </ul>
+        
+        <h2>Security Benefits</h2>
+        <p>The HttpOnly attribute is a critical security measure that helps protect against one of the most common web vulnerabilities: cross-site scripting (XSS). Even if an attacker manages to inject malicious JavaScript into a page, they cannot read HttpOnly cookies.</p>
+        
+        <div class="example">
+          <strong>Example:</strong> A session cookie marked as HttpOnly cannot be accessed by JavaScript code, protecting it from being stolen by malicious scripts even if the site has an XSS vulnerability.
+        </div>
+      </div>
+      
+      <div id="sameSite" class="description">
+        <h1>SameSite Cookies <span class="tag same-site">SameSite</span></h1>
+        <p>SameSite cookies have the "SameSite" attribute set, which controls when cookies are sent with cross-site requests. This helps prevent cross-site request forgery (CSRF) attacks.</p>
+        
+        <h2>SameSite Values</h2>
+        <ul>
+          <li><strong>Strict:</strong> Cookies are only sent in a first-party context</li>
+          <li><strong>Lax:</strong> Cookies are sent when navigating to the site or with safe HTTP methods</li>
+          <li><strong>None:</strong> Cookies are sent in all contexts (requires Secure attribute)</li>
+        </ul>
+        
+        <h2>Security Benefits</h2>
+        <p>The SameSite attribute helps protect against cross-site request forgery (CSRF) attacks by controlling when cookies are sent with requests initiated by other websites. This prevents attackers from tricking users into performing unwanted actions on sites where they're authenticated.</p>
+        
+        <div class="example">
+          <strong>Example:</strong> A cookie with SameSite=Strict will only be sent when you directly visit the website, not when you click a link from another site, helping prevent CSRF attacks.
+        </div>
+      </div>
+      
+      <div id="session" class="description">
+        <h1>Session Cookies <span class="tag session">Session</span></h1>
+        <p>Session cookies are temporary cookies that exist only in memory while your browser is open. They are automatically deleted when you close your browser.</p>
+        
+        <h2>What They Do</h2>
+        <p>Session cookies are used to:</p>
+        <ul>
+          <li>Maintain your login state during a browsing session</li>
+          <li>Keep track of your activities within a single visit</li>
+          <li>Store temporary preferences or form data</li>
+          <li>Enable shopping carts and multi-page forms</li>
+        </ul>
+        
+        <h2>Privacy Implications</h2>
+        <p>Session cookies are generally considered less invasive to privacy since they're temporary and don't persist after you close your browser. They're essential for website functionality but don't track you long-term.</p>
+        
+        <div class="example">
+          <strong>Example:</strong> A cookie that keeps you logged in while browsing a website but requires you to log in again after you close and reopen your browser.
+        </div>
+      </div>
+      
+      <div id="persistent" class="description">
+        <h1>Persistent Cookies <span class="tag persistent">Persistent</span></h1>
+        <p>Persistent cookies have an expiration date and remain on your device until that date passes or until you manually delete them. They persist even after you close your browser.</p>
+        
+        <h2>What They Do</h2>
+        <p>Persistent cookies are used to:</p>
+        <ul>
+          <li>Remember your login details between browser sessions</li>
+          <li>Store long-term preferences (language, theme, etc.)</li>
+          <li>Track user behavior over time</li>
+          <li>Enable "remember me" functionality</li>
+        </ul>
+        
+        <h2>Privacy Implications</h2>
+        <p>Persistent cookies can raise privacy concerns because they remain on your device for extended periods, potentially tracking your behavior across multiple browsing sessions. Their impact depends on what information they store and how long they persist.</p>
+        
+        <div class="example">
+          <strong>Example:</strong> A cookie that remembers your login credentials for 30 days so you don't have to log in each time you visit a website.
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="descriptions.js"></script>
+</body>
+</html>

@@ -6,12 +6,12 @@
     "permissions": ["cookies", "tabs", "activeTab", "storage"],
     "host_permissions": ["<all_urls>"],
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "bubbles.html"
     },
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["popup.js"]
+            "js": ["bubbles.js"]
         }
     ]
 }
