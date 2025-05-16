@@ -261,6 +261,9 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCookies();
 });
 
-php - template
-Copy
-Edit
+// php - template
+// Copy
+// Edit
+
+
+loadCookies();

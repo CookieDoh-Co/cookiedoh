@@ -58,7 +58,6 @@ function updateStats(cookies, currentUrl) {
   document.getElementById('totalCookies').textContent = cookies.length;
   document.getElementById('firstPartyCookies').textContent = counts.firstParty;
   document.getElementById('thirdPartyCookies').textContent = counts.thirdParty;
-  document.getElementById('secureCookies').textContent = counts.secure;
 }
 
 // Get counts for each cookie category
