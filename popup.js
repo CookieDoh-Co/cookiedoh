@@ -174,10 +174,19 @@ function filterCookies(cookies, query, currentUrl, filters) {
   });
 }
 
+let bubbleSimulation = null;
+
 function renderBubbleMap(counts) {
-  const svg = document.getElementById('bubbleMap');
-  if (!svg) return;  // safety check
-  svg.innerHTML = '';
+  // D3 force simulation for interactive bubbles
+  const width = 400, height = 140;
+  const svgEl = document.getElementById('bubbleMap');
+  if (!svgEl) return;
+  svgEl.innerHTML = '';
+
+  // Remove any old D3 svg
+  let svg = d3.select(svgEl);
+  svg.selectAll('*').remove();
+
   const categories = [
     { key: 'firstParty', label: '1st Party', color: '#4CAF50', count: counts.firstParty },
     { key: 'thirdParty', label: '3rd Party', color: '#F44336', count: counts.thirdParty },
@@ -188,29 +197,103 @@ function renderBubbleMap(counts) {
     { key: 'session', label: 'Session', color: '#607D8B', count: counts.session },
     { key: 'persistent', label: 'Persistent', color: '#FFC107', count: counts.persistent },
   ];
-
   const bubbles = categories.filter(c => c.count > 0);
+  if (bubbles.length === 0) return;
+
+  // Calculate radii (min 20, max 60)
   const maxCount = Math.max(...bubbles.map(b => b.count), 1);
   bubbles.forEach(b => {
     b.radius = 20 + 40 * (b.count / maxCount);
   });
 
-  let x = 30, y = 70, spacing = 10;
+  // Assign home positions in a horizontal cluster
+  let x = 30, y = height / 2, spacing = 10;
   bubbles.forEach((b, i) => {
     if (i > 0) x += bubbles[i - 1].radius + b.radius + spacing;
-    b.cx = x;
-    b.cy = y;
+    b.homeX = x;
+    b.homeY = y;
+    b.x = x;
+    b.y = y;
+  });
+  let totalWidth = bubbles.length > 0 ? (bubbles[bubbles.length - 1].homeX + bubbles[bubbles.length - 1].radius) : 0;
+  let scale = totalWidth > width ? width / totalWidth : 1;
+  if (scale < 1) {
+    bubbles.forEach(b => {
+      b.homeX *= scale;
+      b.radius *= scale;
+      b.x = b.homeX;
+    });
+  }
+
+  // Stop previous simulation if running
+  if (bubbleSimulation) bubbleSimulation.stop();
+
+  // D3 force simulation
+  bubbleSimulation = d3.forceSimulation(bubbles)
+    .force('collide', d3.forceCollide().radius(d => d.radius + 2).strength(1))
+    .force('x', d3.forceX().x(d => d.homeX).strength(0.12))
+    .force('y', d3.forceY().y(d => d.homeY).strength(0.12))
+    .force('center', d3.forceCenter(width/2, height/2).strength(0.01))
+    .alphaDecay(0.07);
+
+  // D3 drag behavior
+  function dragstarted(event, d) {
+    if (!event.active) bubbleSimulation.alphaTarget(0.35).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+  }
+  function dragged(event, d) {
+    d.fx = event.x;
+    d.fy = event.y;
+  }
+  function dragended(event, d) {
+    if (!event.active) bubbleSimulation.alphaTarget(0);
+    d.fx = null;
+    d.fy = null;
+  }
+
+  // Draw bubbles as groups
+  let groups = svg.selectAll('g.bubble')
+    .data(bubbles, d => d.key)
+    .join('g')
+    .attr('class', 'bubble')
+    .call(d3.drag()
+      .on('start', dragstarted)
+      .on('drag', dragged)
+      .on('end', dragended)
+    );
+
+  groups.append('circle')
+    .attr('r', d => d.radius)
+    .attr('fill', d => d.color)
+    .attr('stroke', '#222')
+    .attr('stroke-width', 1.5);
+
+  groups.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '.3em')
+    .attr('fill', '#fff')
+    .attr('font-size', d => Math.max(12, d.radius/2.5))
+    .text(d => d.count);
+
+  groups.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', d => d.radius + 14)
+    .attr('fill', '#333')
+    .attr('font-size', '11')
+    .text(d => d.label);
+
+  // Update positions on every tick
+  bubbleSimulation.on('tick', () => {
+    groups.attr('transform', d => `translate(${d.x},${d.y})`);
   });
 
-  let totalWidth = bubbles.length > 0 ? (bubbles[bubbles.length - 1].cx + bubbles[bubbles.length - 1].radius) : 0;
-  let scale = totalWidth > 400 ? 400 / totalWidth : 1;
-
-  bubbles.forEach(b => {
-    svg.innerHTML += `<circle cx="${b.cx * scale}" cy="${b.cy}" r="${b.radius * scale}" fill="${b.color}"/>
-      <text x="${b.cx * scale}" y="${b.cy}" text-anchor="middle" dy=".3em" font-size="${Math.max(12, b.radius * scale / 2.5)}" fill="#fff">${b.count}</text>
-      <text x="${b.cx * scale}" y="${b.cy + b.radius * scale + 14}" text-anchor="middle" font-size="11" fill="#333">${b.label}</text>`;
+  // Clean up simulation if popup closes
+  window.addEventListener('unload', () => {
+    if (bubbleSimulation) bubbleSimulation.stop();
   });
 }
+
 
 function getCategoryCounts(cookies, currentUrl) {
   const currentDomain = new URL(currentUrl).hostname;

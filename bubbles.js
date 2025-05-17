@@ -197,10 +197,8 @@ function createCategoryBubbles(cookies, currentUrl) {
       cookies: categoryCookies
     });
     
-    // Add click event to navigate to descriptions page
-    bubble.addEventListener('click', () => {
-      window.location.href = `descriptions.html?category=${category.key}`;
-    });
+    // We'll handle clicks in the physics simulation
+    // to distinguish between clicks and drags
     
     container.appendChild(bubble);
   });
@@ -215,29 +213,131 @@ function simulateBubblePhysics(bubbles) {
   const width = container.clientWidth;
   const height = container.clientHeight;
   
-  // Run simulation steps
-  let iterations = 0;
-  const maxIterations = 100;
+  // Track mouse and bubble state
+  let mouseDown = false;
+  let mouseX = width / 2;
+  let mouseY = height / 2;
+  let clickStartTime = 0;
+  let selectedBubble = null;
+  const CLICK_THRESHOLD = 200; // ms to distinguish between click and drag
   
-  function simulate() {
+  // Add mouse event listeners to each bubble
+  bubbles.forEach(bubble => {
+    // Mouse down on a specific bubble
+    bubble.element.addEventListener('mousedown', (e) => {
+      e.stopPropagation(); // Prevent container event from firing
+      mouseDown = true;
+      clickStartTime = Date.now();
+      selectedBubble = bubble;
+      
+      // Get mouse position
+      const rect = container.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      
+      // Disable physics for this bubble - it will follow the mouse exactly
+      bubble.fixed = true;
+      bubble.x = mouseX;
+      bubble.y = mouseY;
+      
+      // Restart animation if it's stopped
+      if (!animating) {
+        animating = true;
+        requestAnimationFrame(animate);
+      }
+    });
+  });
+  
+  // Container-level event listeners
+  container.addEventListener('mousedown', (e) => {
+    // Only trigger if we didn't click on a bubble
+    if (!selectedBubble) {
+      mouseDown = true;
+      clickStartTime = Date.now();
+      const rect = container.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      
+      // Restart animation if it's stopped
+      if (!animating) {
+        animating = true;
+        requestAnimationFrame(animate);
+      }
+    }
+  });
+  
+  container.addEventListener('mousemove', (e) => {
+    if (mouseDown) {
+      const rect = container.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      
+      // If a bubble is selected, move it directly with the mouse
+      if (selectedBubble) {
+        selectedBubble.x = mouseX;
+        selectedBubble.y = mouseY;
+      }
+    }
+  });
+  
+  container.addEventListener('mouseup', () => {
+    mouseDown = false;
+    
+    // Re-enable physics for the selected bubble
+    if (selectedBubble) {
+      selectedBubble.fixed = false;
+      selectedBubble = null;
+    }
+  });
+  
+  container.addEventListener('mouseleave', () => {
+    mouseDown = false;
+    
+    // Re-enable physics for the selected bubble
+    if (selectedBubble) {
+      selectedBubble.fixed = false;
+      selectedBubble = null;
+    }
+  });
+  
+  // Continuous animation flag
+  let animating = true;
+  
+  // Animation function
+  function animate() {
     // Apply forces
     for (let i = 0; i < bubbles.length; i++) {
       const b1 = bubbles[i];
       
-      // Center gravity
+      // Skip physics calculations for fixed bubbles (directly controlled by mouse)
+      if (b1.fixed) {
+        // Just update the element position for fixed bubbles
+        b1.element.style.left = `${b1.x - b1.radius}px`;
+        b1.element.style.top = `${b1.y - b1.radius}px`;
+        continue;
+      }
+      
+      // Always apply center gravity for non-fixed bubbles
+      // (regardless of whether mouse is down or not)
       const centerX = width / 2;
       const centerY = height / 2;
       const dx = centerX - b1.x;
       const dy = centerY - b1.y;
       const distToCenter = Math.sqrt(dx * dx + dy * dy);
       
-      // Weak attraction to center
-      b1.vx += (dx / distToCenter) * 0.1;
-      b1.vy += (dy / distToCenter) * 0.1;
+      if (distToCenter > 0) {
+        // Weak attraction to center
+        b1.vx += (dx / distToCenter) * 0.1;
+        b1.vy += (dy / distToCenter) * 0.1;
+      }
       
       // Collision with other bubbles
       for (let j = i + 1; j < bubbles.length; j++) {
         const b2 = bubbles[j];
+        
+        // Skip collision with fixed bubbles
+        if (b2.fixed) continue;
+        
         const dx = b2.x - b1.x;
         const dy = b2.y - b1.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -284,14 +384,27 @@ function simulateBubblePhysics(bubbles) {
       b1.element.style.top = `${b1.y - b1.radius}px`;
     }
     
-    iterations++;
-    if (iterations < maxIterations) {
-      requestAnimationFrame(simulate);
+    // Continue animation
+    if (animating) {
+      requestAnimationFrame(animate);
     }
   }
   
-  // Start simulation
-  simulate();
+  // Start continuous animation
+  animate();
+  
+  // Modify the click event to distinguish between clicks and drags
+  bubbles.forEach(bubble => {
+    const originalClickHandler = bubble.element.onclick;
+    bubble.element.onclick = null; // Remove the original click handler
+    
+    bubble.element.addEventListener('mouseup', (e) => {
+      // Only trigger navigation if it was a quick click (not a drag)
+      if (Date.now() - clickStartTime < CLICK_THRESHOLD) {
+        window.location.href = `descriptions.html?category=${bubble.category}`;
+      }
+    });
+  });
 }
 
 // Show cookie details for a specific category when its bubble is clicked
