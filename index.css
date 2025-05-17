@@ -50,41 +50,7 @@ pre {
 .stat-circle.Session { background-color: #7f8c8d; }
 .stat-circle.Persistent { background-color: #f39c12; }
 
-/* Light mode styles */
-@media (prefers-color-scheme: light) {
-    .theme-system {
-        background-color: #fff;
-        color: #000;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-}
 
-/* Dark mode styles */
-@media (prefers-color-scheme: dark) {
-    .theme-system {
-        background-color: #333;
-        color: #f0f0f0;
-        border: 1px solid #555;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .cookie-stats {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .stat-circle {
-        width: 100px;
-        height: 100px;
-        margin-bottom: 10px;
-    }
-}
 
 .domain-group {
   border: 1px solid #ddd;

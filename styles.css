@@ -347,27 +347,7 @@ p {
     box-sizing: border-box;
 }
 
-/* Light mode styles */
-@media (prefers-color-scheme: light) {
-    .theme-system {
-        background-color: #fff;
-        color: #000;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-}
 
-/* Dark mode styles */
-@media (prefers-color-scheme: dark) {
-    .theme-system {
-        background-color: #333;
-        color: #f0f0f0;
-        border: 1px solid #555;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-}
 
 /* Cookie counters */
 #cookieCounters {
