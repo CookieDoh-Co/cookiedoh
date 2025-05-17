@@ -24,7 +24,7 @@ The **cookiedoh** Chrome extension is designed as an educational tool to increas
 We may update this privacy policy from time to time. Any changes will be posted within the extension and in the repository.
 
 ## Contact
-If you have questions or concerns about privacy or data usage, please contact the developers via the [GitHub repository](https://github.com/TheJoshBishop/cookiedoh).
+If you have questions or concerns about privacy or data usage, please contact the developers via the [GitHub repository](https://github.com/CookieDoh-Co/cookiedoh).
 
 ---
 
