@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Cookie Data Observation Handler (DOH)",
     "version": "1.0",
-    "description": "An extension to expose info on site cookies",
+    "description": "A Chrome extension that displays cookie data in a user friendly way to increase awareness.",
     "icons": {
         "16": "favicon_io/favicon-16x16.png",
         "32": "favicon_io/favicon-32x32.png",
