@@ -15,12 +15,33 @@
     <div class="theme-system">
         <h1 style="text-align:center;">Cookie List</h1>
         
-        <ul id="cookieList" class="cookie-list">
-            <li>Loading...</li>
-        </ul>
+        <div class="search-filter-container">
+            <input type="text" id="searchInput" class="search-bar" placeholder="Search cookies...">
+            <select id="categoryFilter" class="filter-select">
+                <option value="all">All Categories</option>
+                <option value="firstParty">First-Party</option>
+                <option value="thirdParty">Third-Party</option>
+                <option value="secure">Secure</option>
+                <option value="httpOnly">HttpOnly</option>
+                <option value="sameSite">SameSite</option>
+                <option value="session">Session</option>
+                <option value="persistent">Persistent</option>
+                <option value="location">Location</option>
+            </select>
+            <select id="domainFilter" class="filter-select">
+                <option value="all">All Domains</option>
+                <!-- Domains will be populated by JavaScript -->
+            </select>
+        </div>
+        
+        <div class="cookie-list-container">
+            <ul id="cookieList" class="cookie-list">
+                <li>Loading...</li>
+            </ul>
+        </div>
 
     </div>
 </body>
-<script src="popup.js"></script>
+<script src="list.js"></script>
 
 </html>

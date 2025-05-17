@@ -347,6 +347,59 @@ p {
     box-sizing: border-box;
 }
 
+/* Search and filter */
+.search-filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.search-bar {
+    flex: 1;
+    min-width: 200px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+}
+
+/* Cookie list scrollbox */
+.cookie-list-container {
+    height: 320px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    padding: 10px;
+    margin-top: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cookie-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cookie-list li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.cookie-list li:last-child {
+    border-bottom: none;
+}
+
 
 
 /* Cookie counters */
