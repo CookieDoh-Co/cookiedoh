@@ -9,6 +9,13 @@ body {
     overflow: auto;
 }
 
+/* List page specific styles */
+body.list-page {
+    width: 600px;
+    height: 800px;
+    overflow: hidden;
+}
+
 pre {
     white-space: pre-wrap;
     word-break: break-word;
